@@ -28,7 +28,9 @@ options:
 packages:
   Alamofire:
     url: https://github.com/Alamofire/Alamofire.git
-    version: 5.4.3
+    version: 5.10.0
+  
+  
 
 targets:
   Take-Home:
@@ -55,7 +57,7 @@ targets:
     platform: iOS
     sources: [Take-HomeTests]
     info:
-      path: Take-Home/Info.plist
+      path: Take-HomeTests/Info.plist
     dependencies:
       - target: Take-Home
 
@@ -63,7 +65,7 @@ targets:
     type: bundle.ui-testing
     platform: iOS
     info:
-      path: Take-Home/Info.plist
+      path: Take-HomeUITests/Info.plist
     sources: [Take-HomeUITests]
     dependencies:
       - target: Take-Home        
