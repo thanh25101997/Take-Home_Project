@@ -3,6 +3,7 @@ configs:
   Debug: debug
   Release: release
 
+#  schemes
 schemes:
   Take-Home:
     build:
@@ -25,13 +26,22 @@ options:
   deploymentTarget:
     iOS: "13.0"
 
+#  Library
 packages:
   Alamofire:
     url: https://github.com/Alamofire/Alamofire.git
     version: 5.10.0
+  RxSwift:
+    url: https://github.com/ReactiveX/RxSwift.git
+    version: 6.0.0
+  RxCocoa:
+    url: https://github.com/ReactiveX/RxSwift.git
+    version: 6.0.0
+  Kingfisher:
+    url: https://github.com/onevcat/Kingfisher.git
+    version: 8.3.2
   
-  
-
+#  Targets
 targets:
   Take-Home:
     type: application
@@ -45,6 +55,9 @@ targets:
         CURRENT_PROJECT_VERSION: 42
     dependencies:
       - package: Alamofire
+      - package: RxSwift
+      - package: RxCocoa
+      - package: Kingfisher
     scheme:
       testTargets:
         - name: Take-HomeTests
