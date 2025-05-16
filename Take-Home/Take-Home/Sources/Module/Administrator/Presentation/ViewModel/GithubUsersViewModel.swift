@@ -22,7 +22,7 @@ class GithubUsersViewModel: ViewModelType {
     
     
     init(navigator: GithubUsersNavigatorProtocol,
-        interactor: GithubUsersInteractorProtocol) {
+         interactor: GithubUsersInteractorProtocol) {
         self.navigator = navigator
         self.interactor = interactor
     }
@@ -31,6 +31,7 @@ class GithubUsersViewModel: ViewModelType {
         let viewWillAppear: ControlEvent<Bool>
         let backBtn: Driver<Void>?
         let loadMoreUsers: PublishSubject<Void>
+        let selectUser: ControlEvent<User>
     }
     
     struct Output {
@@ -64,6 +65,10 @@ class GithubUsersViewModel: ViewModelType {
         
         input.backBtn?.drive(onNext: { [weak self] _ in
             self?.navigator.backToHome()
+        }).disposed(by: disposeBag)
+        
+        input.selectUser.subscribe(onNext: { [weak self] user in
+            self?.navigator.gotoUserDetail(loginUsername: user.login)
         }).disposed(by: disposeBag)
         
         trackActivity

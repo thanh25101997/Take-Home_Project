@@ -9,7 +9,7 @@ import Foundation
 
 protocol GithubUsersNavigatorProtocol {
     
-    func gotoUserDetail(id: Int)
+    func gotoUserDetail(loginUsername: String)
     func backToHome()
     
 }
@@ -17,11 +17,9 @@ protocol GithubUsersNavigatorProtocol {
 class GithubUsersNavigator: BaseNavigator,
                             GithubUsersNavigatorProtocol {
     
-    func gotoUserDetail(id: Int) {
-        vc?
-            .navigationController?
-            .pushViewController(GithubUsersViewController(),
-                                animated: true)
+    func gotoUserDetail(loginUsername: String) {
+        let userDetailvc: UserDetailViewController = DefaultAssembler.shared.createModule(loginUsername: loginUsername)
+        vc?.navigationController?.pushViewController(userDetailvc, animated: true)
     }
     
     func backToHome() {

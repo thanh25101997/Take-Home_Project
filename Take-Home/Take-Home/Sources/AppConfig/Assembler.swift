@@ -8,6 +8,11 @@
 import Foundation
 
 protocol Assembler: AnyObject,
-                        GithubUsersAssembler {}
+                    GithubUsersAssembler,
+                    UserDetailAssembler {}
 
-final class DefaultAssembler: Assembler {}
+final class DefaultAssembler: Assembler {
+    
+    static let shared = DefaultAssembler()
+    
+}

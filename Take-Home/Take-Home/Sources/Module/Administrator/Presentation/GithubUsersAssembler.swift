@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol GithubUsersAssembler {
+protocol GithubUsersAssembler where Self: DefaultAssembler {
     func createModule() -> GithubUsersViewController
 }
 
-extension GithubUsersAssembler {
+extension GithubUsersAssembler where Self: DefaultAssembler {
     
     func createModule() -> GithubUsersViewController {
         let vc = GithubUsersViewController()
