@@ -13,12 +13,18 @@ class UsersTableViewCell: UITableViewCell {
     @IBOutlet weak var imgAvatar: UIImageView!
     @IBOutlet weak var userNameLb: UILabel!
     @IBOutlet weak var htmlLinkLB: UILabel!
+    @IBOutlet weak var viewInfoUser: UIView!
     
     var user: User?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        viewInfoUser.clipsToBounds = true
+        viewInfoUser.layer.cornerRadius = 10
+        viewInfoUser.superview?.sketchShadow(x: 4, y: 4, opacity: 0.2)
+        imgAvatar.makeCircle()
+        imgAvatar.drawBackGroundView()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
