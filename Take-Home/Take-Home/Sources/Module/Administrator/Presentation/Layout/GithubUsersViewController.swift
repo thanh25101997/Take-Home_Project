@@ -20,7 +20,6 @@ class GithubUsersViewController: BaseViewController<GithubUsersViewModel> {
         super.configView()
         setDefautNavigationBar(title: "Github Users")
         usersTableView.registerCell(for: "UsersTableViewCell")
-        usersTableView.tableFooterView = UIView()
         usersTableView.rx.setDelegate(self).disposed(by: disposeBag)
         activityIndicator = LoadMoreActivityIndicator(scrollView: usersTableView,
                                                       spacingFromLastCell: 10,

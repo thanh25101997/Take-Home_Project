@@ -4,9 +4,17 @@
 
 import Foundation
 
-protocol UserDetailNavigatorProtocol {}
+protocol UserDetailNavigatorProtocol {
+    
+    func backToHome()
+    
+}
 
 class UserDetailNavigator: BaseNavigator,
                            UserDetailNavigatorProtocol {
+    
+    func backToHome() {
+        vc?.navigationController?.popViewController(animated: true)
+    }
     
 }

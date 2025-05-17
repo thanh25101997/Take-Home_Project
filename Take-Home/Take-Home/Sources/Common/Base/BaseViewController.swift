@@ -34,7 +34,7 @@ class BaseViewController<T>: UIViewController {
     func setDefautNavigationBar(title: String? = nil, leftBarButtonImage: UIImage? = nil, rightBarButtonImage: UIImage? = nil) {
         self.title = title ?? "メールアドレスを認証"
         self.navigationController?.navigationBar.tintColor = UIColor.black
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: leftBarButtonImage ?? UIImage(systemName: "chevron.backward"),
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: leftBarButtonImage ?? UIImage(systemName: "arrow.backward"),
                                                                 style: .plain,
                                                                 target: self,
                                                                 action: nil)
