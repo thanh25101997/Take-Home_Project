@@ -40,25 +40,12 @@ class GithubUsersRepository: GithubUsersRepositoryProtocol {
     
     func getUserFromServer(page: Int,
                            since: Int) -> Observable<[User]> {
-        return Observable<[User]>.create { observer -> Disposable in
-            let url = "https://api.github.com/users"
-            let parameters: Parameters = [
-                "per_page": 20,
-                "since": page * 20
-            ]
-            AF.request(url, parameters: parameters)
-                .validate()
-                .responseDecodable(of: [User].self) { response in
-                    switch response.result {
-                    case .success(let users):
-                        observer.onNext(users)
-                        observer.onCompleted()
-                    case .failure(let error):
-                        observer.onError(error)
-                    }
-                }
-            return Disposables.create()
-        }
+        
+        let observable: Observable<[User]> = APIClient
+            .shared
+            .request(endPoint: APIRouter.fetchUsers(per_page: 20,
+                                                    since: page * 20))
+        return observable
     }
     
 }

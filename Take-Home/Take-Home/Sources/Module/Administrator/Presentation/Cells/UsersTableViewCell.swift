@@ -41,17 +41,20 @@ class UsersTableViewCell: UITableViewCell {
         
         self.imgAvatar.image = UIImage(named: "avatar_default")
         guard let url = URL(string: user.avatar_url) else { return }
-        KingfisherManager.shared.retrieveImage(with: url, options: [.cacheMemoryOnly]) { [weak self] result in
+        KingfisherManager.shared.retrieveImage(with: url,
+                                               options: [.cacheMemoryOnly]) { [weak self] result in
+            guard let self else { return }
             switch result {
             case .success(let value):
                 DispatchQueue.main.async {
-                    if self?.user?.id == user.id {
-                        self?.imgAvatar.image = value.image
+                    if self.user?.id == user.id {
+                        self.imgAvatar.image = value.image
                     }
                 }
             case .failure(let error):break
             }
         }
+        
     }
     
 }
