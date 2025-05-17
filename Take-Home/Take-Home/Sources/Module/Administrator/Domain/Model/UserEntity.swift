@@ -8,8 +8,19 @@
 import Foundation
 
 struct User: Codable {
+    
     let id: Int
     let login: String
     let avatar_url: String
     let html_url: String
+    
+    func toEntity() -> UserDetailsEntityReaml {
+        let entity = UserDetailsEntityReaml()
+        entity.id = id
+        entity.login = login
+        entity.avatar_url = avatar_url
+        entity.html_url = html_url
+        return entity
+    }
+    
 }

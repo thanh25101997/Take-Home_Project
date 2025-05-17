@@ -40,6 +40,9 @@ packages:
   Kingfisher:
     url: https://github.com/onevcat/Kingfisher.git
     version: 8.3.2
+  RealmSwift:
+    url: https://github.com/realm/realm-swift.git
+    version: 20.0.2
   
 #  Targets
 targets:
@@ -58,6 +61,7 @@ targets:
       - package: RxSwift
       - package: RxCocoa
       - package: Kingfisher
+      - package: RealmSwift
     scheme:
       testTargets:
         - name: Take-HomeTests
