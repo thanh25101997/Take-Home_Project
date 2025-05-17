@@ -20,6 +20,7 @@ class UsersTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.selectionStyle = .none
         viewInfoUser.clipsToBounds = true
         viewInfoUser.layer.cornerRadius = 10
         viewInfoUser.superview?.sketchShadow(x: 4, y: 4, opacity: 0.2)

@@ -15,8 +15,6 @@ final class UserDefaultService {
     
     private let hasLaunchedKey = "hasLaunchedBefore"
     
-    /// Hàm kiểm tra và đánh dấu lần đầu mở app
-    /// Trả về true nếu đây là lần đầu tiên
     func isFirstLaunch() -> Bool {
         UserDefaults.standard.bool(forKey: hasLaunchedKey)
     }
