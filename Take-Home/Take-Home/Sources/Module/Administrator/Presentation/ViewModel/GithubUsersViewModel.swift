@@ -43,33 +43,55 @@ class GithubUsersViewModel: ViewModelType {
         self.input = input
         self.output = Output()
         
-        // Request getUser
-        Observable.merge(input.viewWillAppear.map({_ in}).asObservable(),
-                         input.loadMoreUsers)
-        .flatMap { [weak self] _ -> Observable<[User]> in
+        input.viewWillAppear.flatMap { [weak self] _ -> Observable<[User]> in
             guard let self else { return .empty() }
-            return self.interactor.getUser(page: self.page,
-                                           since: 20,
-                                           currentUsers: self.output.listUser.value)
-            .trackActivity(self.trackActivity)
-        }.subscribe(onNext: { [weak self] users in
-            guard let self else { return }
+            if self.interactor.isFirstLaunch() {
+                return self.interactor.getUsersStogate()
+            } else {
+                return self.interactor.getUser(page: self.page,
+                                               since: 20,
+                                               currentUsers: self.output.listUser.value)
+                .do(onNext: { users in
+                    self.interactor.saveFirstLaunch()
+                    self.interactor.saveUsersStogate(users: users)
+                })
+                .trackActivity(self.trackActivity)
+            }
+        }
+        .subscribe { users in
             self.output.listUser.accept(users)
             self.page += 1
-        }, onError: { error in
-            print(error)
-        }, onDisposed: {
-            print("onDisposed")
-        })
+        }
         .disposed(by: disposeBag)
         
-        input.backBtn?.drive(onNext: { [weak self] _ in
-            self?.navigator.backToHome()
-        }).disposed(by: disposeBag)
+        // Request getUser
+        input.loadMoreUsers
+            .flatMap { [weak self] _ -> Observable<[User]> in
+                guard let self else { return .empty() }
+                return self.interactor.getUser(page: self.page,
+                                               since: 20,
+                                               currentUsers: self.output.listUser.value)
+                .trackActivity(self.trackActivity)
+            }.subscribe(onNext: { [weak self] users in
+                guard let self else { return }
+                self.output.listUser.accept(users)
+                self.page += 1
+            }, onError: { error in
+                print(error)
+            }, onDisposed: {
+                print("onDisposed")
+            })
+            .disposed(by: disposeBag)
         
-        input.selectUser.subscribe(onNext: { [weak self] user in
-            self?.navigator.gotoUserDetail(loginUsername: user.login)
-        }).disposed(by: disposeBag)
+        input.backBtn?
+            .drive(onNext: { [weak self] _ in
+                self?.navigator.backToHome()
+            }).disposed(by: disposeBag)
+        
+        input.selectUser
+            .subscribe(onNext: { [weak self] user in
+                self?.navigator.gotoUserDetail(loginUsername: user.login)
+            }).disposed(by: disposeBag)
         
         trackActivity
             .asSharedSequence()

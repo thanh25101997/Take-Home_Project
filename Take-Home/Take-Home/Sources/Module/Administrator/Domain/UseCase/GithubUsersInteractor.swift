@@ -12,6 +12,10 @@ import Alamofire
 
 protocol GithubUsersInteractorProtocol {
     
+    func isFirstLaunch() -> Bool
+    func saveFirstLaunch()
+    func getUsersStogate() -> Observable<[User]>
+    func saveUsersStogate(users: [User])
     func getUser(page: Int,
                  since: Int,
                  currentUsers: [User]) -> Observable<[User]>
@@ -19,6 +23,32 @@ protocol GithubUsersInteractorProtocol {
 }
 
 class GithubUsersInteractor: GithubUsersInteractorProtocol {
+    
+    func isFirstLaunch() -> Bool {
+        UserDefaultService.shared.isFirstLaunch()
+    }
+    
+    func saveFirstLaunch() {
+        UserDefaultService.shared.setFirstFirstLaunch(value: true)
+    }
+    
+    func getUsersStogate() -> Observable<[User]> {
+        return Observable<[User]>.create { observer -> Disposable in
+            observer.onNext(ReamlManager.shared.fetchUsers())
+            observer.onCompleted()
+            return Disposables.create()
+        }
+    }
+    
+    func saveUsersStogate(users: [User]) {
+        do {
+            try users.forEach { i in
+                try ReamlManager.shared.saveData(i.toEntity())
+            }
+        } catch {
+            print(error)
+        }
+    }
     
     func getUser(page: Int,
                  since: Int,
