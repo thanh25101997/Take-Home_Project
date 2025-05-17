@@ -20,14 +20,10 @@ class GithubUsersViewController: BaseViewController<GithubUsersViewModel> {
         super.configView()
         setDefautNavigationBar(title: "Github Users")
         usersTableView.registerCell(for: "UsersTableViewCell")
-        usersTableView.tableFooterView = UIView()
         usersTableView.rx.setDelegate(self).disposed(by: disposeBag)
         activityIndicator = LoadMoreActivityIndicator(scrollView: usersTableView,
                                                       spacingFromLastCell: 10,
                                                       spacingFromLastCellWhenLoadMoreActionStart: 60)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-            self.navigationController?.popViewController(animated: true)
-        }
     }
     
     override func bindViewModel() {
@@ -35,7 +31,8 @@ class GithubUsersViewController: BaseViewController<GithubUsersViewModel> {
         
         let input = GithubUsersViewModel.Input(viewWillAppear: rx.viewWillAppear,
                                                backBtn: self.navigationItem.leftBarButtonItem?.rx.tap.asDriver(),
-                                               loadMoreUsers: loadMore)
+                                               loadMoreUsers: loadMore,
+                                               selectUser: usersTableView.rx.safeModelSelected(User.self))
         let output = viewModel.transform(input: input)
         
         output.listUser
