@@ -16,13 +16,15 @@ protocol GithubUsersInteractorProtocol {
     func saveFirstLaunch()
     func getUsersStogate() -> Observable<[User]>
     func saveUsersStogate(users: [User])
-    func getUser(page: Int,
-                 since: Int,
-                 currentUsers: [User]) -> Observable<[User]>
+    func getUsers(page: Int,
+                  since: Int,
+                  currentUsers: [User]) -> Observable<[User]>
     
 }
 
 class GithubUsersInteractor: GithubUsersInteractorProtocol {
+    
+    let githubUsersRepository: GithubUsersRepositoryProtocol = GithubUsersRepository()
     
     func isFirstLaunch() -> Bool {
         UserDefaultService.shared.isFirstLaunch()
@@ -33,48 +35,20 @@ class GithubUsersInteractor: GithubUsersInteractorProtocol {
     }
     
     func getUsersStogate() -> Observable<[User]> {
-        return Observable<[User]>.create { observer -> Disposable in
-            observer.onNext(ReamlManager.shared.fetchUsers())
-            observer.onCompleted()
-            return Disposables.create()
-        }
+        return githubUsersRepository.fetchUsersLocal()
     }
     
     func saveUsersStogate(users: [User]) {
-        do {
-            try users.forEach { i in
-                try ReamlManager.shared.saveData(i.toEntity())
-            }
-        } catch {
-            print(error)
-        }
+        githubUsersRepository.saveUsersStogate(users: users)
     }
     
-    func getUser(page: Int,
-                 since: Int,
-                 currentUsers: [User]) -> Observable<[User]> {
-        return Observable<[User]>.create { observer -> Disposable in
-            let url = "https://api.github.com/users"
-            let parameters: Parameters = [
-                "per_page": 20,
-                "since": (page) * 20
-            ]
-            AF.request(url, parameters: parameters)
-                .validate()
-                .responseDecodable(of: [User].self) { response in
-                    switch response.result {
-                    case .success(let users):
-                        let userTemp = currentUsers + users
-                        observer.onNext(currentUsers + users)
-                        observer.onCompleted()
-                        print(parameters)
-                        print(userTemp.count)
-                    case .failure(let error):
-                        observer.onError(error)
-                        print(error)
-                    }
-                }
-            return Disposables.create()
+    func getUsers(page: Int,
+                  since: Int,
+                  currentUsers: [User]) -> Observable<[User]> {
+        githubUsersRepository.getUserFromServer(page: page,
+                                                since: since)
+        .map { users in
+            return currentUsers + users
         }
     }
     
