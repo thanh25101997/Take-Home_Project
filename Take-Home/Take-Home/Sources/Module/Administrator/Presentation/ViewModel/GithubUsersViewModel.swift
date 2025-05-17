@@ -48,9 +48,9 @@ class GithubUsersViewModel: ViewModelType {
             if self.interactor.isFirstLaunch() {
                 return self.interactor.getUsersStogate()
             } else {
-                return self.interactor.getUser(page: self.page,
-                                               since: 20,
-                                               currentUsers: self.output.listUser.value)
+                return self.interactor.getUsers(page: self.page,
+                                                since: 20,
+                                                currentUsers: self.output.listUser.value)
                 .do(onNext: { users in
                     self.interactor.saveFirstLaunch()
                     self.interactor.saveUsersStogate(users: users)
@@ -58,7 +58,9 @@ class GithubUsersViewModel: ViewModelType {
                 .trackActivity(self.trackActivity)
             }
         }
-        .subscribe { users in
+        .subscribe { [weak self] users in
+            guard let self else { return }
+            print(users.count)
             self.output.listUser.accept(users)
             self.page += 1
         }
@@ -68,12 +70,13 @@ class GithubUsersViewModel: ViewModelType {
         input.loadMoreUsers
             .flatMap { [weak self] _ -> Observable<[User]> in
                 guard let self else { return .empty() }
-                return self.interactor.getUser(page: self.page,
-                                               since: 20,
-                                               currentUsers: self.output.listUser.value)
+                return self.interactor.getUsers(page: self.page,
+                                                since: 20,
+                                                currentUsers: self.output.listUser.value)
                 .trackActivity(self.trackActivity)
             }.subscribe(onNext: { [weak self] users in
                 guard let self else { return }
+                print(users.count)
                 self.output.listUser.accept(users)
                 self.page += 1
             }, onError: { error in
