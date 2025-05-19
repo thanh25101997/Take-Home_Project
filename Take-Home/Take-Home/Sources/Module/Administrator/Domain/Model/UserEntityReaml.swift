@@ -12,14 +12,14 @@ class UserDetailsEntityReaml: Object {
     
     @Persisted var id: Int = 0
     @Persisted var login: String = ""
-    @Persisted var avatar_url: String = ""
-    @Persisted var html_url: String = ""
+    @Persisted var avatarUrl: String = ""
+    @Persisted var htmlUrl: String = ""
     
     func toModel() -> User {
         User(id: id,
              login: login,
-             avatar_url: avatar_url,
-             html_url: html_url)
+             avatarUrl: avatarUrl,
+             htmlUrl: htmlUrl)
     }
     
 }

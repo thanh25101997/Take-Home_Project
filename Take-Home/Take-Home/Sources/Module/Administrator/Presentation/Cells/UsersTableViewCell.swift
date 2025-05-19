@@ -37,10 +37,10 @@ class UsersTableViewCell: UITableViewCell {
     func setupView(user: User) {
         self.user = user
         userNameLb.text = user.login
-        htmlLinkLB.text = user.html_url
+        htmlLinkLB.text = user.htmlUrl
         
         self.imgAvatar.image = UIImage(named: "avatar_default")
-        guard let url = URL(string: user.avatar_url) else { return }
+        guard let url = URL(string: user.avatarUrl ?? "") else { return }
         KingfisherManager.shared.retrieveImage(with: url,
                                                options: [.cacheMemoryOnly]) { [weak self] result in
             guard let self else { return }
@@ -54,7 +54,6 @@ class UsersTableViewCell: UITableViewCell {
             case .failure(let error):break
             }
         }
-        
     }
     
 }

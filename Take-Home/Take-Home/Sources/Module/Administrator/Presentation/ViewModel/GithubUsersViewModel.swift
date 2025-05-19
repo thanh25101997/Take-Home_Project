@@ -28,10 +28,10 @@ class GithubUsersViewModel: ViewModelType {
     }
     
     struct Input {
-        let viewWillAppear: ControlEvent<Bool>
+        let viewWillAppear: Driver<Bool>
         let backBtn: Driver<Void>?
         let loadMoreUsers: PublishSubject<Void>
-        let selectUser: ControlEvent<User>
+        let selectUser: Driver<User>
     }
     
     struct Output {
@@ -43,7 +43,9 @@ class GithubUsersViewModel: ViewModelType {
         self.input = input
         self.output = Output()
         
-        input.viewWillAppear.flatMap { [weak self] _ -> Observable<[User]> in
+        input.viewWillAppear
+            .asObservable()
+            .flatMap { [weak self] _ -> Observable<[User]> in
             guard let self else { return .empty() }
             if self.interactor.isFirstLaunch() {
                 return self.interactor.getUsersStogate()
@@ -58,12 +60,15 @@ class GithubUsersViewModel: ViewModelType {
                 .trackActivity(self.trackActivity)
             }
         }
-        .subscribe { [weak self] users in
-            guard let self else { return }
-            print(users.count)
-            self.output.listUser.accept(users)
-            self.page += 1
-        }
+            .subscribe(onNext: { [weak self] users in
+                guard let self else { return }
+                print(users.count)
+                self.output.listUser.accept(users)
+                self.page += 1
+            }, onError: { eror in
+                print(eror)
+            }, onCompleted: nil,
+                       onDisposed: nil)
         .disposed(by: disposeBag)
         
         // Request getUser
@@ -92,8 +97,8 @@ class GithubUsersViewModel: ViewModelType {
             }).disposed(by: disposeBag)
         
         input.selectUser
-            .subscribe(onNext: { [weak self] user in
-                self?.navigator.gotoUserDetail(loginUsername: user.login)
+            .drive(onNext: { [weak self] user in
+                self?.navigator.gotoUserDetail(loginUsername: user.login ?? "")
             }).disposed(by: disposeBag)
         
         trackActivity

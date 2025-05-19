@@ -13,14 +13,12 @@ final class UserDefaultService {
     
     private init() {}
     
-    private let hasLaunchedKey = "hasLaunchedBefore"
-    
     func isFirstLaunch() -> Bool {
-        UserDefaults.standard.bool(forKey: hasLaunchedKey)
+        UserDefaults.standard.bool(forKey: UserDefaultConst.isFirstLaucherApp)
     }
     
     func setFirstFirstLaunch(value: Bool = true) {
-        UserDefaults.standard.set(value, forKey: hasLaunchedKey)
+        UserDefaults.standard.set(value, forKey: UserDefaultConst.isFirstLaucherApp)
         UserDefaults.standard.synchronize()
     }
     
