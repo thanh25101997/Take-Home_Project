@@ -29,10 +29,10 @@ class GithubUsersViewController: BaseViewController<GithubUsersViewModel> {
     override func bindViewModel() {
         super.bindViewModel()
         
-        let input = GithubUsersViewModel.Input(viewWillAppear: rx.viewWillAppear,
+        let input = GithubUsersViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver(),
                                                backBtn: self.navigationItem.leftBarButtonItem?.rx.tap.asDriver(),
                                                loadMoreUsers: loadMore,
-                                               selectUser: usersTableView.rx.safeModelSelected(User.self))
+                                               selectUser: usersTableView.rx.safeModelSelected(User.self).asDriver())
         let output = viewModel.transform(input: input)
         
         output.listUser

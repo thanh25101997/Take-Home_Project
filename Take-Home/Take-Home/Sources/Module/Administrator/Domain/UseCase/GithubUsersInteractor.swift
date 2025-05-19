@@ -24,7 +24,7 @@ protocol GithubUsersInteractorProtocol {
 
 class GithubUsersInteractor: GithubUsersInteractorProtocol {
     
-    let githubUsersRepository: GithubUsersRepositoryProtocol = GithubUsersRepository()
+    var githubUsersRepository: GithubUsersRepositoryProtocol = GithubUsersRepository()
     
     func isFirstLaunch() -> Bool {
         UserDefaultService.shared.isFirstLaunch()
