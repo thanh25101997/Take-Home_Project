@@ -80,3 +80,14 @@ open Take-Home.xcodeproj
 
 ---
 
+## 🚀 6. Xcode Template
+
+To speed up module creation, this project supports custom Xcode file templates.
+CreatModuleWithMVVM+CleanArchitecture.zip
+
+### 📁 Setup Template
+
+1. Unzip the file `CreatModuleWithMVVM+CleanArchitecture.zip`.
+
+2. Place the extracted folder inside ` ~/Library/Developer/Xcode/Templates/`
+
