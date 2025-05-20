@@ -45,6 +45,7 @@ class GithubUsersViewModel: ViewModelType {
         
         input.viewWillAppear
             .asObservable()
+            .take(1)
             .flatMap { [weak self] _ -> Observable<[User]> in
             guard let self else { return .empty() }
             if self.interactor.isFirstLaunch() {
