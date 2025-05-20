@@ -20,8 +20,7 @@ final class GithubUsersInteractorTest: XCTestCase {
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         githubUsersRepositoryMock = GithubUsersRepositoryMock()
-        interactor = GithubUsersInteractor()
-        interactor.githubUsersRepository = githubUsersRepositoryMock
+        interactor = GithubUsersInteractor(githubUsersRepository: githubUsersRepositoryMock)
         
     }
     

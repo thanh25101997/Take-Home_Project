@@ -20,29 +20,31 @@ protocol GithubUsersRepositoryProtocol {
 
 class GithubUsersRepository: GithubUsersRepositoryProtocol {
     
+    private var realmDatabase: RealmManagerProtocol
+    private var apiClient: ApiClientProtocol
+    
+    init(realmDatabase: RealmManagerProtocol = RealmManager.shared,
+         apiClient: ApiClientProtocol = APIClient.shared) {
+        self.realmDatabase = realmDatabase
+        self.apiClient = apiClient
+    }
+    
     func fetchUsersLocal() -> Observable<[User]> {
         return Observable<[User]>.create { observer -> Disposable in
-            observer.onNext(ReamlManager.shared.fetchUsers())
+            observer.onNext(self.realmDatabase.fetchUsers())
             observer.onCompleted()
             return Disposables.create()
         }
     }
     
     func saveUsersStogate(users: [User]) {
-        do {
-            try users.forEach { i in
-                try ReamlManager.shared.saveData(i.toEntity())
-            }
-        } catch {
-            print(error)
-        }
+        realmDatabase.saveUsers(users)
     }
     
     func getUserFromServer(page: Int,
                            since: Int) -> Observable<[User]> {
         
-        let observable: Observable<[User]> = APIClient
-            .shared
+        let observable: Observable<[User]> = apiClient
             .request(endPoint: APIRouter.fetchUsers(per_page: 20,
                                                     since: page * 20))
         return observable

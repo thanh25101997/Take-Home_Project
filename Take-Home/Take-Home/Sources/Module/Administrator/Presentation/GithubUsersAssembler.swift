@@ -15,8 +15,10 @@ extension GithubUsersAssembler where Self: DefaultAssembler {
     
     func createModule() -> GithubUsersViewController {
         let vc = GithubUsersViewController()
+        let repo = GithubUsersRepository()
+        let interacter = GithubUsersInteractor(githubUsersRepository: repo)
         let vm = GithubUsersViewModel(navigator: GithubUsersNavigator(vc: vc),
-                                      interactor: GithubUsersInteractor())
+                                      interactor: interacter)
         vc.viewModel = vm
         return vc
     }

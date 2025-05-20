@@ -9,7 +9,11 @@ import Foundation
 import Alamofire
 import RxSwift
 
-class APIClient {
+protocol ApiClientProtocol {
+    func request<T: Decodable>(endPoint: APIRouter) -> Observable<T>
+}
+
+class APIClient: ApiClientProtocol {
     
     static let shared = APIClient()
     

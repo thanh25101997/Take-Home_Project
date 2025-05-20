@@ -28,8 +28,8 @@ struct User: Decodable {
         case htmlUrl = "html_url"
     }
     
-    func toEntity() -> UserDetailsEntityReaml {
-        let entity = UserDetailsEntityReaml()
+    func toEntity() -> UserDetailsEntityRealm {
+        let entity = UserDetailsEntityRealm()
         entity.id = id ?? -1
         entity.login = login ?? ""
         entity.avatarUrl = avatarUrl ?? ""

@@ -1,5 +1,5 @@
 //
-//  UserEntityReaml.swift
+//  UserEntityRealm.swift
 //  Take-Home
 //
 //  Created by Van Thanh on 17/5/25.
@@ -8,7 +8,7 @@
 import RealmSwift
 import Foundation
 
-class UserDetailsEntityReaml: Object {
+class UserDetailsEntityRealm: Object {
     
     @Persisted var id: Int = 0
     @Persisted var login: String = ""
