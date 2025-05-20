@@ -25,33 +25,33 @@ class UserDetailViewModel: ViewModelType {
     }
     
     struct Input {
-        let viewWillAppear: ControlEvent<Bool>
+        let viewWillAppear: Driver<Bool>
         let backBtn: Driver<Void>?
     }
     
     struct Output {
-        
         let avatarUrl: BehaviorRelay<String> = .init(value: "")
         let userDetails: BehaviorRelay<UserDetailsEntity?> = .init(value: nil)
-        
     }
     
     func transform(input: Input) -> Output {
         self.input = input
         self.output = Output()
         
-        input.viewWillAppear.flatMap({ _ in
-            return self.interactor.getUser(loginUserName: self.loginUsername)
-                .catch({ _ in
-                    return Observable.empty()
-                })
-        })
-        .bind(to: output.userDetails)
-        .disposed(by: disposeBag)
+        input.viewWillAppear
+            .asObservable()
+            .flatMap({ [weak self] _ -> Observable<UserDetailsEntity> in
+                guard let self else { return .empty() }
+                return self.interactor.getUser(loginUserName: self.loginUsername)
+            })
+            .bind(to: output.userDetails)
+            .disposed(by: disposeBag)
         
-        input.backBtn?.drive(onNext: { [weak self] _ in
-            self?.navigator.backToHome()
-        }).disposed(by: disposeBag)
+        input.backBtn?
+            .drive(onNext: { [weak self] _ in
+                self?.navigator.backToHome()
+            })
+            .disposed(by: disposeBag)
         
         return output
     }

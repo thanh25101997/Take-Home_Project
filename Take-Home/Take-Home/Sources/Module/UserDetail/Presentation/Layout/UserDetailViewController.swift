@@ -25,7 +25,7 @@ class UserDetailViewController: BaseViewController<UserDetailViewModel> {
     
     override func bindViewModel() {
         super.bindViewModel()
-        let input = UserDetailViewModel.Input(viewWillAppear: rx.viewWillAppear,
+        let input = UserDetailViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver(),
                                               backBtn: self.navigationItem.leftBarButtonItem?.rx.tap.asDriver())
         let output = viewModel.transform(input: input)
         

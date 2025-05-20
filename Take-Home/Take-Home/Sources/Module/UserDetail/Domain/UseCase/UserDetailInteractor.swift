@@ -13,9 +13,18 @@ protocol UserDetailInteractorProtocol {
 
 class UserDetailInteractor: UserDetailInteractorProtocol {
     
+    var userDetailRepository: UserDetailRepositoryProtocol
+    
+    init(userDetailRepository: UserDetailRepositoryProtocol) {
+        self.userDetailRepository = userDetailRepository
+    }
+    
     func getUser(loginUserName: String) -> Observable<UserDetailsEntity> {
-        let observable: Observable<UserDetailsEntity> = APIClient.shared.request(endPoint: APIRouter.fetchUserDetails(name: loginUserName))
-        return observable
+        return userDetailRepository
+            .getUserFromServer(loginUserName: loginUserName)
+            .catch { _ in
+                return .empty()
+            }
     }
     
 }

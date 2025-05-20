@@ -12,8 +12,10 @@ extension UserDetailAssembler where Self: DefaultAssembler {
     
     func createModule(loginUsername: String) -> UserDetailViewController {
         let vc = UserDetailViewController()
-        let vm = UserDetailViewModel(navigator: UserDetailNavigator(vc: vc),
-                                     interactor: UserDetailInteractor(),
+        let interactor =  UserDetailInteractor(userDetailRepository: UserDetailRepository())
+        let navigator = UserDetailNavigator(vc: vc)
+        let vm = UserDetailViewModel(navigator: navigator,
+                                     interactor: interactor,
                                      loginUsername: loginUsername)
         vc.viewModel = vm
         return vc
