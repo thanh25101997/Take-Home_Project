@@ -98,6 +98,19 @@ class GithubUsersViewModelTest: XCTestCase {
         }
     }
     
+    /// ## testBackBtn
+    /// ## [prerequisites]
+    /// none
+    ///## [Expected result]
+    /// userDetailNavigatorMock.backToHomeCalled
+    func testBackBtn() {
+        // Given
+        // When
+        backBtnTriger.onNext(())
+        // Then
+        XCTAssertEqual(githubUsersNavigatorMock.backToHomeCalled, true)
+    }
+    
     func setupUsers(_ total: Int) -> [User] {
         return Array(repeating:  User(), count: total)
     }
