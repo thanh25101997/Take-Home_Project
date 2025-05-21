@@ -25,7 +25,7 @@ The project is split into **layers** with clear boundaries:
 ### 💡 Layered Design
 
 - **View**: `UIViewController`, `UIView`
-- **ViewModel**: handles logic, transforms inputs → outputs
+- **ViewModel**: handles logic, transforms input → output
 - **UseCase / Interactor**: contains business logic
 - **Repository**: abstracted data access (remote/local)
 - **Data Source**: implements data fetching (API, DB)
