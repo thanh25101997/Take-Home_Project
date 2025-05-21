@@ -18,7 +18,7 @@ class GithubUsersViewController: BaseViewController<GithubUsersViewModel> {
     
     override func configView() {
         super.configView()
-        setDefautNavigationBar(title: "Github Users")
+        setDefautNavigationBar(title: ScreenTitleConst.titleAdministrator)
         usersTableView.registerCell(for: "UsersTableViewCell")
         usersTableView.rx.setDelegate(self).disposed(by: disposeBag)
         activityIndicator = LoadMoreActivityIndicator(scrollView: usersTableView,

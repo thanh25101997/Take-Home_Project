@@ -11,3 +11,8 @@ import Foundation
 struct UserDefaultConst {
     static let isFirstLaucherApp = "isFirstLaucherApp"
 }
+
+struct ScreenTitleConst {
+    static let titleAdministrator = "Github Users"
+    static let titleUserDetail = "User Details"
+}
