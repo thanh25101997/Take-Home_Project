@@ -48,7 +48,7 @@ class GithubUsersViewModel: ViewModelType {
             .take(1)
             .flatMap { [weak self] _ -> Observable<[User]> in
             guard let self else { return .empty() }
-            if self.interactor.isFirstLaunch() {
+            if !self.interactor.isFirstLaunch() {
                 return self.interactor.getUsersStogate()
             } else {
                 return self.interactor.getUsers(page: self.page,

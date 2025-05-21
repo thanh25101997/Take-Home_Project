@@ -35,7 +35,7 @@ class GithubUsersInteractor: GithubUsersInteractorProtocol {
     }
     
     func saveFirstLaunch() {
-        UserDefaultService.shared.setFirstFirstLaunch(value: true)
+        UserDefaultService.shared.setFirstLaunch(value: true)
     }
     
     func getUsersStogate() -> Observable<[User]> {

@@ -62,9 +62,9 @@ class GithubUsersViewModelTest: XCTestCase {
                       [User]?, // outputSaveUsersStogate
                       [User])] // outputListUser
         params = [
-            (true, [], [], true, false, nil, []),
-            (true, setupUsers(4), [], true, false, nil, setupUsers(4)),
-            (false, setupUsers(4), setupUsers(4), false, true, setupUsers(4), setupUsers(4))
+            (false, [], [], true, false, nil, []),
+            (false, setupUsers(4), [], true, false, nil, setupUsers(4)),
+            (true, setupUsers(4), setupUsers(4), false, true, setupUsers(4), setupUsers(4))
         ]
         runWithParams(params: params) { index, param in
             // Given
@@ -94,7 +94,6 @@ class GithubUsersViewModelTest: XCTestCase {
             XCTAssertEqual(output.listUser.value.count,
                            outputListUser.count,
                            "index \(index)")
-            
         }
     }
     
