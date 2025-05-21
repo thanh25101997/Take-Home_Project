@@ -62,8 +62,7 @@ enum APIRouter: APIRouterProtocol {
         case .fetchUsers,
                 .fetchUserDetails:
             var headers = HTTPHeaders()
-            headers.add(name: "Content-Type", value: "application/json")
-            headers.add(name: "charset", value: "utf-8")
+            headers.add(name: "Content-Type", value: "application/json;charset=utf-8")
             return headers
         }
     }
