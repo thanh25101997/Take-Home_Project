@@ -54,8 +54,8 @@ class UserDetailViewController: BaseViewController<UserDetailViewModel> {
         viewInfoContent.clipsToBounds = true
         viewInfoContent.layer.cornerRadius = 10
         viewInfoContent.superview?.sketchShadow(x: 4, y: 4, opacity: 0.2)
-        imgFollower.makeCircle()
-        imgFollowing.makeCircle()
+        imgFollower.superview?.makeCircle()
+        imgFollowing.superview?.makeCircle()
         avatarImage.makeCircle()
         avatarImage.drawBackGroundView()
     }
