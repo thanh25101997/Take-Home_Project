@@ -9,7 +9,7 @@
 import Foundation
 
 struct UserDefaultConst {
-    static let isFirstLaucherApp = "isFirstLaucherApp"
+    static let hasOpenedAppOnce = "hasOpenedAppOnce"
 }
 
 struct ScreenTitleConst {

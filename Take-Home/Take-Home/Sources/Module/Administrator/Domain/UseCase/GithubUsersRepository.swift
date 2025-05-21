@@ -45,7 +45,7 @@ class GithubUsersRepository: GithubUsersRepositoryProtocol {
                            since: Int) -> Observable<[User]> {
         
         let observable: Observable<[User]> = apiClient
-            .request(endPoint: APIRouter.fetchUsers(per_page: 20,
+            .request(endPoint: APIRouter.fetchUsers(per_page: since,
                                                     since: page * 20))
         return observable
     }

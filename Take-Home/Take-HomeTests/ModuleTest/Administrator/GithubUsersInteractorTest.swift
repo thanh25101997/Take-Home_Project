@@ -32,14 +32,14 @@ final class GithubUsersInteractorTest: XCTestCase {
     func testIsFirstLaunch() throws {
         let params: [(Bool, // mockFirstLaunch
                       Bool)] // outputIsFirstLaunch
-        params = [(true, true),
-                  (false, false)]
+        params = [(true, false),
+                  (false, true)]
         params.enumerated().forEach { index, params in
             XCTContext.runActivity(named: "\(#function)_\(index)") { activity in
                 // given
                 let (mockFirstLaunch,
                      outputIsFirstLaunch) = params
-                UserDefaultService.shared.setFirstFirstLaunch(value: mockFirstLaunch)
+                UserDefaultService.shared.setFirstLaunch(value: mockFirstLaunch)
                 // when
                 let result = interactor.isFirstLaunch()
                 // then
@@ -57,11 +57,11 @@ final class GithubUsersInteractorTest: XCTestCase {
     /// hasLaunchedBefore
     func testSaveFirstLaunch() {
         // given
-        UserDefaults.standard.set(false, forKey: UserDefaultConst.isFirstLaucherApp)
+        UserDefaults.standard.set(false, forKey: UserDefaultConst.hasOpenedAppOnce)
         // when
         interactor.saveFirstLaunch()
         // then
-        XCTAssertEqual(UserDefaults.standard.bool(forKey: UserDefaultConst.isFirstLaucherApp),
+        XCTAssertEqual(UserDefaults.standard.bool(forKey: UserDefaultConst.hasOpenedAppOnce),
                        true)
     }
     
