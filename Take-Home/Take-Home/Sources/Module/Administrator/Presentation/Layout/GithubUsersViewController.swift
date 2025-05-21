@@ -47,9 +47,7 @@ class GithubUsersViewController: BaseViewController<GithubUsersViewModel> {
             .observe(on: MainScheduler.instance)
             .filter({!$0})
             .subscribe { [weak self] value in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self?.activityIndicator.stop()
-                }
+                self?.activityIndicator.stop()
             }.disposed(by: disposeBag)
     }
     
