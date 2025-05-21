@@ -50,7 +50,7 @@ class UserDetailViewController: BaseViewController<UserDetailViewModel> {
     
     override func configView() {
         super.configView()
-        setDefautNavigationBar(title: "User Details")
+        setDefautNavigationBar(title: ScreenTitleConst.titleUserDetail)
         viewInfoContent.clipsToBounds = true
         viewInfoContent.layer.cornerRadius = 10
         viewInfoContent.superview?.sketchShadow(x: 4, y: 4, opacity: 0.2)
