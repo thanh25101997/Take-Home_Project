@@ -67,7 +67,9 @@ class LoadMoreActivityIndicator {
             if !activityIndicatorView.isAnimating {
                 if offsetY > contentDelta && offsetDelta >= spacingFromLastCellWhenLoadMoreActionStart && !activityIndicatorView.isAnimating {
                     activityIndicatorView.startAnimating()
-                    closure?()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        closure?()
+                    }
                 }
             }
 
