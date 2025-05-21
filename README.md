@@ -50,7 +50,7 @@ The project is split into **layers** with clear boundaries:
 ## 🧪 4. Unit Testing
 
 - Test targets: `Take-HomeTests`
-- Experimental demo of ViewModel and Interactor
+- Experimental demo of ViewModel, Interactor and Repository
 - Use case and repository layers are mockable
 
 ---

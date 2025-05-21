@@ -50,8 +50,4 @@ class GithubUsersInteractorMock: GithubUsersInteractorProtocol {
         }
     }
     
-    
-  
-    
-    
 }
